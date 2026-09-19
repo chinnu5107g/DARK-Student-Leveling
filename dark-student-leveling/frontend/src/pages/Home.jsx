@@ -5,170 +5,224 @@ import AcademyWorld from '../components/3d/AcademyWorld';
 import { useCharacterStore, CharacterStates } from '../store/characterStore';
 import soundEngine from '../services/soundEngine';
 import { 
-  Compass, 
   Sparkles, 
-  ArrowRight, 
-  Code2, 
-  BrainCircuit, 
-  BookOpen, 
-  ShieldCheck, 
-  Zap 
+  Crown, 
+  Swords, 
+  Infinity as InfinityIcon, 
+  ChevronDown,
+  Box
 } from 'lucide-react';
+import heroBg from '../assets/solo-hero.jpg';
 
 export default function Home() {
   const navigate = useNavigate();
-  const { currentState, setState, triggerReaction } = useCharacterStore();
+  const { currentState, setState } = useCharacterStore();
+  const [view3D, setView3D] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleBeginJourney = () => {
+  const handleBeginAscent = () => {
     soundEngine.playClick();
     soundEngine.playLevelUp();
-    setState(CharacterStates.WALK);
     setIsTransitioning(true);
 
     setTimeout(() => {
       navigate('/dashboard');
-      setState(CharacterStates.IDLE);
-    }, 1200);
+    }, 900);
   };
 
   const animationControls = [
     { label: 'Idle', state: CharacterStates.IDLE },
-    { label: 'Walk', state: CharacterStates.WALK },
-    { label: 'Run', state: CharacterStates.RUN },
-    { label: 'Jump', state: CharacterStates.JUMP },
-    { label: 'Think', state: CharacterStates.THINK },
-    { label: 'Talk', state: CharacterStates.TALK },
-    { label: 'Celebrate', state: CharacterStates.CELEBRATE },
-    { label: 'Level Up', state: CharacterStates.LEVEL_UP },
+    { label: 'Arise', state: CharacterStates.LEVEL_UP },
+    { label: 'Combat', state: CharacterStates.RUN },
+    { label: 'Aura', state: CharacterStates.TALK },
   ];
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-[#05070D]">
-      {/* Background 3D Scene */}
-      <div className="absolute inset-0">
-        <AcademyWorld 
-          cameraMode={isTransitioning ? "awakening" : "cinematic"} 
-          showDark={true}
-          showCompanion={true}
-        />
-      </div>
-
-      {/* Cinematic Vignette Overlay - Left gradient for text contrast, open on right for 3D character */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#05070D] via-transparent to-[#05070D]/40" />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#05070D]/95 via-[#05070D]/60 to-transparent w-full md:w-3/5" />
-
-      {/* Hero Content Overlay (Left Aligned) */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-12 lg:p-16 pointer-events-none">
-        
-        {/* Top Branding Pill */}
-        <motion.div 
-          className="pointer-events-auto flex items-center gap-3"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <div className="relative w-screen h-screen overflow-hidden bg-[#030008] select-none text-slate-100">
+      
+      {/* Background Layer: High-Res Solo Leveling Artwork or Live 3D World */}
+      {view3D ? (
+        <div className="absolute inset-0 z-0">
+          <AcademyWorld 
+            cameraMode={isTransitioning ? "awakening" : "cinematic"} 
+            showDark={true}
+            showCompanion={true}
+          />
+        </div>
+      ) : (
+        <div 
+          className="absolute inset-0 z-0 bg-cover bg-center sm:bg-right bg-no-repeat transition-all duration-700 scale-105 animate-pulse-slow"
+          style={{ backgroundImage: `url(${heroBg})` }}
         >
-          <div className="px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/40 text-cyan-300 text-xs font-bold tracking-widest uppercase flex items-center gap-2 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            DARK AI STUDENT NEXUS
-          </div>
-        </motion.div>
-
-        {/* Center Main Hero Typography */}
-        <motion.div 
-          className="max-w-2xl pointer-events-auto space-y-4"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-        >
-          <div className="space-y-1">
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-300 to-blue-500 drop-shadow-[0_0_35px_rgba(0,229,255,0.5)]">
-              DARK
-            </h1>
-            <div className="text-sm sm:text-base font-bold tracking-[0.35em] text-cyan-400 uppercase font-mono">
-              STUDENT LEVELING SYSTEM
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-widest text-slate-300 uppercase">
-            <span>STUDY</span>
-            <span className="text-cyan-400">•</span>
-            <span>PRACTICE</span>
-            <span className="text-cyan-400">•</span>
-            <span>LEVEL UP</span>
-          </div>
-
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-lg font-normal">
-            Turn your learning journey into an epic adventure. Level up your coding, logic, and problem-solving skills in a futuristic 3D fantasy academy alongside your AI companion DARK.
-          </p>
-
-          <div className="pt-4 flex flex-wrap items-center gap-4">
-            <button
-              onClick={handleBeginJourney}
-              className="px-8 py-4 rounded-xl holo-btn text-sm font-black flex items-center gap-3 shadow-[0_0_30px_rgba(0,229,255,0.5)] hover:scale-105 transition"
-            >
-              <span>BEGIN YOUR JOURNEY</span>
-              <ArrowRight size={18} />
-            </button>
-
-            <button
-              onClick={() => navigate('/world')}
-              className="px-6 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-200 text-sm font-bold flex items-center gap-2 transition"
-            >
-              <Compass size={18} className="text-cyan-400" />
-              <span>EXPLORE 3D WORLD</span>
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Bottom Feature Badges & Character Live Animation Rig Tester */}
-        <div className="pointer-events-auto flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+          {/* Subtle Ambient Vignette & Shadow Mist Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030008] via-transparent to-[#030008]/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#030008]/95 via-[#030008]/70 to-transparent w-full lg:w-3/5" />
           
-          {/* Feature Pillars */}
-          <div className="flex flex-wrap gap-2 text-[11px] text-slate-400">
-            <div className="px-3 py-1.5 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-2">
-              <Code2 size={14} className="text-cyan-400" />
-              Coding Dungeon
-            </div>
-            <div className="px-3 py-1.5 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-2">
-              <BrainCircuit size={14} className="text-purple-400" />
-              Aptitude Arena
-            </div>
-            <div className="px-3 py-1.5 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center gap-2">
-              <BookOpen size={14} className="text-blue-400" />
-              Knowledge Library
-            </div>
-          </div>
+          {/* Ambient Purple Sparkles / Lightning Sparks */}
+          <div className="absolute top-1/4 left-1/3 w-2 h-2 rounded-full bg-purple-400 blur-[1px] animate-ping" />
+          <div className="absolute top-1/2 left-2/3 w-2.5 h-2.5 rounded-full bg-violet-300 blur-[1px] animate-pulse" />
+          <div className="absolute top-1/3 right-1/4 w-3 h-3 rounded-full bg-purple-500 blur-[2px] animate-ping" />
+        </div>
+      )}
 
-          {/* Interactive 3D Character Pose Control */}
-          <div className="holo-panel p-2.5 rounded-xl border border-cyan-500/30">
-            <div className="text-[10px] uppercase font-bold tracking-wider text-cyan-400 mb-1.5 flex items-center justify-between">
-              <span>DARK 3D Animation Rig</span>
-              <span className="font-mono text-white">{currentState}</span>
-            </div>
-            <div className="grid grid-cols-4 gap-1">
-              {animationControls.map(ctrl => (
-                <button
-                  key={ctrl.label}
-                  onClick={() => {
-                    soundEngine.playClick();
-                    setState(ctrl.state);
-                  }}
-                  className={`px-2 py-1 text-[10px] font-bold rounded transition ${
-                    currentState === ctrl.state
-                      ? 'bg-cyan-500 text-slate-950 shadow-[0_0_10px_#00E5FF]'
-                      : 'bg-slate-900/90 text-slate-300 hover:bg-slate-800 hover:text-cyan-300'
-                  }`}
-                >
-                  {ctrl.label}
-                </button>
-              ))}
-            </div>
-          </div>
+      {/* Main Hero Container */}
+      <div className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col justify-between p-6 sm:p-12 lg:p-16 pt-24 sm:pt-28">
+        
+        {/* Left Content Area (Exact Mockup Layout) */}
+        <div className="max-w-xl space-y-6 mt-6 sm:mt-10">
+          
+          {/* Kicker Tagline */}
+          <motion.div 
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-xs sm:text-sm font-bold tracking-[0.35em] text-purple-400 uppercase font-mono drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]"
+          >
+            LEVEL UP. RISE ABOVE.
+          </motion.div>
+
+          {/* Epic Metallic SOLO LEVELING Title */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.15 }}
+            className="relative"
+          >
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-200 to-slate-400 drop-shadow-[0_0_35px_rgba(168,85,247,0.7)] font-serif uppercase">
+              SOLO<br />LEVELING
+            </h1>
+            
+            {/* Sparkle Flares on Title */}
+            <div className="absolute top-4 -left-3 text-purple-300 animate-pulse">✦</div>
+            <div className="absolute top-1/2 left-44 text-violet-400 animate-ping">✦</div>
+            <div className="absolute bottom-2 left-64 text-purple-200 animate-pulse">✦</div>
+          </motion.div>
+
+          {/* Subtitle Quotes */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9, delay: 0.3 }}
+            className="space-y-1 text-sm sm:text-base text-slate-300 font-light tracking-wide leading-relaxed"
+          >
+            <p className="text-slate-300">The weak become strong.</p>
+            <p className="text-slate-300">The hunters become legends.</p>
+            <p className="text-purple-300 font-medium italic drop-shadow-[0_0_8px_rgba(192,132,252,0.8)]">
+              I level up... alone.
+            </p>
+          </motion.div>
+
+          {/* Gothic Action Button: BEGIN YOUR ASCENT */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45 }}
+            className="pt-2"
+          >
+            <button
+              onClick={handleBeginAscent}
+              className="gothic-btn flex items-center gap-3 group text-xs sm:text-sm"
+            >
+              <span>BEGIN YOUR ASCENT</span>
+              <Sparkles size={16} className="text-purple-300 group-hover:rotate-45 transition-transform" />
+            </button>
+          </motion.div>
 
         </div>
 
+        {/* Bottom Bar: Stats Counter & Mode Switcher */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.55 }}
+          className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 pb-2"
+        >
+          
+          {/* Metric Badges (Mockup exact counters) */}
+          <div className="flex items-center gap-8 sm:gap-12">
+            
+            {/* Stat 1 */}
+            <div className="flex flex-col items-start gap-1">
+              <div className="flex items-center gap-2 text-purple-400">
+                <Crown size={18} className="drop-shadow-[0_0_8px_#a855f7]" />
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-mono">100+</span>
+              </div>
+              <span className="text-[10px] tracking-[0.18em] uppercase text-purple-300/70 font-semibold">
+                DUNGEONS CONQUERED
+              </span>
+            </div>
+
+            {/* Stat 2 */}
+            <div className="flex flex-col items-start gap-1">
+              <div className="flex items-center gap-2 text-purple-400">
+                <Swords size={18} className="drop-shadow-[0_0_8px_#a855f7]" />
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-mono">50+</span>
+              </div>
+              <span className="text-[10px] tracking-[0.18em] uppercase text-purple-300/70 font-semibold">
+                SHADOW UNLOCKED
+              </span>
+            </div>
+
+            {/* Stat 3 */}
+            <div className="hidden md:flex flex-col items-start gap-1">
+              <div className="flex items-center gap-2 text-purple-400">
+                <InfinityIcon size={18} className="drop-shadow-[0_0_8px_#a855f7]" />
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-mono">∞</span>
+              </div>
+              <span className="text-[10px] tracking-[0.18em] uppercase text-purple-300/70 font-semibold">
+                LIMITLESS GROWTH
+              </span>
+            </div>
+
+          </div>
+
+          {/* 3D Character Mode & Rig Controls */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                setView3D(!view3D);
+              }}
+              className="px-3.5 py-2 rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-500/40 text-purple-200 text-xs font-bold flex items-center gap-2 transition shadow-[0_0_15px_rgba(147,51,234,0.3)]"
+            >
+              <Box size={15} className="text-purple-400" />
+              <span>{view3D ? "CINEMATIC 2D ART" : "LIVE 3D MONARCH"}</span>
+            </button>
+
+            {view3D && (
+              <div className="flex items-center gap-1 bg-purple-950/80 p-1 rounded-xl border border-purple-500/30">
+                {animationControls.map(ctrl => (
+                  <button
+                    key={ctrl.label}
+                    onClick={() => {
+                      soundEngine.playClick();
+                      setState(ctrl.state);
+                    }}
+                    className={`px-2.5 py-1 text-[10px] font-bold rounded transition ${
+                      currentState === ctrl.state
+                        ? 'bg-purple-600 text-white shadow-[0_0_12px_#a855f7]'
+                        : 'text-purple-300 hover:text-white'
+                    }`}
+                  >
+                    {ctrl.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+        </motion.div>
+
       </div>
+
+      {/* Far Right Scroll Indicator */}
+      <div className="hidden lg:flex fixed right-8 bottom-12 z-20 flex-col items-center gap-2 text-purple-400/80 pointer-events-none">
+        <span className="text-[9px] tracking-[0.3em] uppercase font-mono [writing-mode:vertical-lr]">
+          SCROLL
+        </span>
+        <ChevronDown size={14} className="animate-bounce" />
+      </div>
+
     </div>
   );
 }

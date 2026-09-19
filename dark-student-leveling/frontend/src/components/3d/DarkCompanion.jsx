@@ -18,30 +18,30 @@ export default function DarkCompanion({ scale = 0.55, offset = [1.2, 1.6, 0.4] }
   const materials = useMemo(() => {
     return {
       chassis: new THREE.MeshStandardMaterial({
-        color: new THREE.Color('#0A0F1C'),
+        color: new THREE.Color('#080010'),
         roughness: 0.2,
         metalness: 0.9,
       }),
       accents: new THREE.MeshStandardMaterial({
-        color: new THREE.Color('#1E293B'),
+        color: new THREE.Color('#2E1065'),
         roughness: 0.3,
         metalness: 0.8,
       }),
       visor: new THREE.MeshBasicMaterial({
-        color: new THREE.Color('#030712'),
+        color: new THREE.Color('#030008'),
       }),
       eyesGlow: new THREE.MeshBasicMaterial({
-        color: new THREE.Color('#00E5FF'),
+        color: new THREE.Color('#C084FC'),
       }),
       thrusterGlow: new THREE.MeshBasicMaterial({
-        color: new THREE.Color('#00E5FF'),
+        color: new THREE.Color('#A855F7'),
         transparent: true,
         opacity: 0.85,
       }),
       earTrim: new THREE.MeshStandardMaterial({
-        color: new THREE.Color('#00E5FF'),
-        emissive: new THREE.Color('#00E5FF'),
-        emissiveIntensity: 1.5,
+        color: new THREE.Color('#C084FC'),
+        emissive: new THREE.Color('#9333EA'),
+        emissiveIntensity: 2.0,
       })
     };
   }, []);

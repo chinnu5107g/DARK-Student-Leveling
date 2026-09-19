@@ -13,9 +13,10 @@ export default function SkyVortex() {
     const pos = new Float32Array(starCount * 3);
     const cols = new Float32Array(starCount * 3);
     const colorPalette = [
-      new THREE.Color('#00E5FF'),
-      new THREE.Color('#3862F6'),
-      new THREE.Color('#8B5CF6'),
+      new THREE.Color('#C084FC'),
+      new THREE.Color('#9333EA'),
+      new THREE.Color('#7E22CE'),
+      new THREE.Color('#E9D5FF'),
       new THREE.Color('#FFFFFF'),
     ];
 
@@ -73,14 +74,14 @@ export default function SkyVortex() {
         />
       </points>
 
-      {/* Cosmic Celestial Moon */}
+      {/* Cosmic Celestial Shadow Moon */}
       <group ref={moonRef} position={[25, 45, -50]}>
         <mesh>
           <sphereGeometry args={[7, 32, 32]} />
           <meshStandardMaterial
-            color="#E0F2FE"
-            emissive="#38BDF8"
-            emissiveIntensity={0.6}
+            color="#F3E8FF"
+            emissive="#A855F7"
+            emissiveIntensity={0.8}
             roughness={0.9}
           />
         </mesh>
@@ -88,35 +89,35 @@ export default function SkyVortex() {
         <mesh scale={1.2}>
           <sphereGeometry args={[7, 24, 24]} />
           <meshBasicMaterial
-            color="#00E5FF"
+            color="#C084FC"
             transparent
-            opacity={0.12}
+            opacity={0.2}
             side={THREE.BackSide}
           />
         </mesh>
       </group>
 
-      {/* Swirling Arcane Sky Vortex (Pillar of Ascension) */}
+      {/* Swirling Arcane Sky Vortex (Shadow Gate Ascension) */}
       <group position={[0, 48, -40]} rotation={[0.4, 0, 0]}>
         <group ref={vortexRef}>
           {/* Outer Spiral Ring */}
           <mesh>
             <ringGeometry args={[14, 18, 48]} />
             <meshBasicMaterial
-              color="#8B5CF6"
+              color="#6B21A8"
               transparent
               opacity={0.4}
               side={THREE.DoubleSide}
               blending={THREE.AdditiveBlending}
             />
           </mesh>
-          {/* Middle Cyan Ring */}
+          {/* Middle Violet Ring */}
           <mesh rotation={[0, 0, 0.8]}>
             <ringGeometry args={[8, 13, 36]} />
             <meshBasicMaterial
-              color="#00E5FF"
+              color="#A855F7"
               transparent
-              opacity={0.5}
+              opacity={0.6}
               side={THREE.DoubleSide}
               blending={THREE.AdditiveBlending}
             />
@@ -125,22 +126,22 @@ export default function SkyVortex() {
           <mesh>
             <ringGeometry args={[2, 6, 24]} />
             <meshBasicMaterial
-              color="#FFFFFF"
+              color="#E9D5FF"
               transparent
-              opacity={0.8}
+              opacity={0.9}
               side={THREE.DoubleSide}
               blending={THREE.AdditiveBlending}
             />
           </mesh>
         </group>
 
-        {/* Luminous Ascension Light Beam */}
+        {/* Luminous Shadow Gate Light Beam */}
         <mesh position={[0, -25, 0]}>
           <cylinderGeometry args={[0.8, 4, 50, 24, 1, true]} />
           <meshBasicMaterial
-            color="#00E5FF"
+            color="#C084FC"
             transparent
-            opacity={0.25}
+            opacity={0.3}
             side={THREE.DoubleSide}
             blending={THREE.AdditiveBlending}
           />

@@ -46,41 +46,55 @@ export default function Navbar({ onOpenAI, onToggleSidebar }) {
   ];
 
   /* -------------------------------------------------------------
-   * HOME PAGE NAVBAR: Minimalist, Cinematic Floating Header
+   * HOME PAGE NAVBAR: Solo Leveling Shadow Ascent Floating Header
    * ------------------------------------------------------------- */
   if (isHomePage) {
     return (
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-slate-950/90 via-slate-950/40 to-transparent px-6 sm:px-12 py-4 pointer-events-none">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-[#030008]/90 via-[#030008]/40 to-transparent px-6 sm:px-12 py-5 pointer-events-none">
         <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
           
-          {/* Brand */}
+          {/* Shadow Ascent Crest & Brand */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-700 via-cyan-500 to-indigo-900 p-0.5 shadow-[0_0_20px_rgba(0,229,255,0.6)] group-hover:scale-105 transition-transform flex items-center justify-center">
-              <span className="font-black text-white text-lg tracking-tighter">D</span>
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-b from-purple-900/60 to-purple-950/90 border border-purple-500/40 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] group-hover:scale-105 transition-transform">
+              <Sparkles size={18} className="text-purple-300 animate-pulse" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-black text-xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-300 to-blue-400">
-                  DARK
-                </span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-400 font-mono">
-                  LEVELING SYSTEM
-                </span>
+              <div className="font-serif tracking-[0.25em] text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-purple-400">
+                SHADOW
               </div>
-              <p className="text-[9px] tracking-widest text-slate-400 uppercase font-semibold">
-                AI Student Progression
-              </p>
+              <div className="font-serif tracking-[0.28em] text-[10px] text-purple-400/90 font-medium -mt-0.5">
+                ASCENT
+              </div>
             </div>
           </Link>
 
-          {/* Right Action: Audio + Quick Enter Button */}
+          {/* Center Navigation Links (Matching Mockup) */}
+          <div className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-[0.2em] text-purple-300/70 uppercase">
+            <Link to="/" className="text-purple-200 border-b border-purple-400 pb-0.5 transition hover:text-white">
+              HOME
+            </Link>
+            <Link to="/world" className="hover:text-purple-200 transition">
+              FEATURES
+            </Link>
+            <Link to="/library" className="hover:text-purple-200 transition">
+              ABOUT
+            </Link>
+            <Link to="/quests" className="hover:text-purple-200 transition">
+              QUESTS
+            </Link>
+            <Link to="/leaderboard" className="hover:text-purple-200 transition">
+              RANKINGS
+            </Link>
+          </div>
+
+          {/* Right Action: Sound & ENTER PORTAL Button */}
           <div className="flex items-center gap-3">
             <button
               onClick={handleSoundToggle}
-              className="p-2.5 rounded-xl bg-slate-900/70 border border-slate-700/80 hover:border-cyan-400 text-slate-300 hover:text-cyan-400 transition shadow-sm backdrop-blur-md"
+              className="p-2.5 rounded-xl bg-purple-950/40 border border-purple-800/60 hover:border-purple-400 text-purple-300 hover:text-white transition shadow-sm backdrop-blur-md"
               title={soundOn ? "Sound Effects ON" : "Sound Effects MUTED"}
             >
-              {soundOn ? <Volume2 size={18} /> : <VolumeX size={18} className="text-red-400" />}
+              {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} className="text-red-400" />}
             </button>
 
             <button
@@ -88,10 +102,10 @@ export default function Navbar({ onOpenAI, onToggleSidebar }) {
                 soundEngine.playLevelUp();
                 navigate('/dashboard');
               }}
-              className="px-5 py-2.5 rounded-xl holo-btn text-xs font-black tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(0,229,255,0.4)]"
+              className="px-5 py-2 rounded-lg bg-purple-950/60 hover:bg-purple-900/80 border border-purple-500/50 hover:border-purple-300 text-purple-200 hover:text-white text-xs font-bold tracking-[0.15em] uppercase flex items-center gap-2 shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all hover:scale-105"
             >
-              <span>ENTER ACADEMY</span>
-              <ArrowRight size={15} />
+              <Sparkles size={14} className="text-purple-400" />
+              <span>ENTER PORTAL</span>
             </button>
           </div>
 
