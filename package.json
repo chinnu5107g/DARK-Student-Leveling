@@ -1,0 +1,12 @@
+{
+  "name": "dark-student-leveling-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix dark-student-leveling/frontend run dev",
+    "build": "npm --prefix dark-student-leveling/frontend run build",
+    "preview": "npm --prefix dark-student-leveling/frontend run preview",
+    "backend": "npm --prefix dark-student-leveling/backend run dev",
+    "install:all": "npm --prefix dark-student-leveling/frontend install && npm --prefix dark-student-leveling/backend install"
+  }
+}

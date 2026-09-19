@@ -1,0 +1,42 @@
+name: DARK Student Leveling CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Backend
+        working-directory: dark-student-leveling/backend
+        run: npm ci
+
+      - name: Check Backend
+        working-directory: dark-student-leveling/backend
+        run: npm test --if-present
+
+      - name: Install Frontend
+        working-directory: dark-student-leveling/frontend
+        run: npm ci
+
+      - name: Test Frontend
+        working-directory: dark-student-leveling/frontend
+        run: npm test --if-present
+
+      - name: Build Frontend
+        working-directory: dark-student-leveling/frontend
+        run: npm run build --if-present
